@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
+  "dev": "vite",
+  "build": "vite build",
+  "preview": "vite preview --port $PORT --host 0.0.0.0"
+}
+,
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-alert-dialog": "^1.1.6",
