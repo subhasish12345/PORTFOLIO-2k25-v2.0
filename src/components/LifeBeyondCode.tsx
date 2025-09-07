@@ -13,55 +13,55 @@ const stats = [
 // Gallery images for each interest
 const galleryImages = {
   gaming: [
-    '/LIFE BEYONDCODE/GAME 1.jpg',
-    '/LIFE BEYONDCODE/GAME 2.jpg',
-    '/LIFE BEYONDCODE/GAME 3.jpg',
-    '/LIFE BEYONDCODE/GAME 4.jpg',
-    '/LIFE BEYONDCODE/GAME 5.jpg',
-    '/LIFE BEYONDCODE/GAME 6.jpg',
-    '/LIFE BEYONDCODE/GAME 7.jpg'
+    '/src/public/LIFE BEYONDCODE/GAME 1.jpg',
+    '/src/public/LIFE BEYONDCODE/GAME 2.jpg',
+    '/src/public/LIFE BEYONDCODE/GAME 3.jpg',
+    '/src/public/LIFE BEYONDCODE/GAME 4.jpg',
+    '/src/public/LIFE BEYONDCODE/GAME 5.jpg',
+    '/src/public/LIFE BEYONDCODE/GAME 6.jpg',
+    '/src/public/LIFE BEYONDCODE/GAME 7.jpg'
   ],
   music: [
-    '/LIFE BEYONDCODE/MUSIC 1.jpg',
-    '/LIFE BEYONDCODE/MUSIC 2.jpg'
+    '/src/public/LIFE BEYONDCODE/MUSIC 1.jpg',
+    '/src/public/LIFE BEYONDCODE/MUSIC 2.jpg'
   ],
   art: [
-    '/LIFE BEYONDCODE/ART 1.jpg',
-    '/LIFE BEYONDCODE/ART 2.jpg',
-    '/LIFE BEYONDCODE/ART 3.jpg',
-    '/LIFE BEYONDCODE/ART 4.jpg',
-    '/LIFE BEYONDCODE/ART 5.jpg',
-    '/LIFE BEYONDCODE/ART 6.jpg',
-    '/LIFE BEYONDCODE/ART 7.jpg',
-    '/LIFE BEYONDCODE/ART 8.jpg',
-    '/LIFE BEYONDCODE/ART 9.jpg'
+    '/src/public/LIFE BEYONDCODE/ART 1.jpg',
+    '/src/public/LIFE BEYONDCODE/ART 2.jpg',
+    '/src/public/LIFE BEYONDCODE/ART 3.jpg',
+    '/src/public/LIFE BEYONDCODE/ART 4.jpg',
+    '/src/public/LIFE BEYONDCODE/ART 5.jpg',
+    '/src/public/LIFE BEYONDCODE/ART 6.jpg',
+    '/src/public/LIFE BEYONDCODE/ART 7.jpg',
+    '/src/public/LIFE BEYONDCODE/ART 8.jpg',
+    '/src/public/LIFE BEYONDCODE/ART 9.jpg'
   ],
   photography: [
-    '/LIFE BEYONDCODE/PHOTOGRPHY 1.jpg',
-    '/LIFE BEYONDCODE/PHOTOGRPHY 2.jpg',
-    '/LIFE BEYONDCODE/PHOTOGRPHY 3.jpg',
-    '/LIFE BEYONDCODE/PHOTOGRPHY 4.jpg',
-    '/LIFE BEYONDCODE/PHOTOGRPHY 5.jpg',
-    '/LIFE BEYONDCODE/PHOTOGRPHY 6.jpg',
-    '/LIFE BEYONDCODE/PHOTOGRPHY 7.jpg',
-    '/LIFE BEYONDCODE/PHOTOGRPHY 8.jpg',
-    '/LIFE BEYONDCODE/PHOTOGRPHY 9.jpg',
-    '/LIFE BEYONDCODE/PHOTOGRPHY 10.jpg',
-    '/LIFE BEYONDCODE/PHOTOGRPHY 11.jpg',
-    '/LIFE BEYONDCODE/PHOTOGRPHY 12.jpg',
-    '/LIFE BEYONDCODE/PHOTOGRPHY 13.jpg'
+    '/src/public/LIFE BEYONDCODE/PHOTOGRPHY 1.jpg',
+    '/src/public/LIFE BEYONDCODE/PHOTOGRPHY 2.jpg',
+    '/src/public/LIFE BEYONDCODE/PHOTOGRPHY 3.jpg',
+    '/src/public/LIFE BEYONDCODE/PHOTOGRPHY 4.jpg',
+    '/src/public/LIFE BEYONDCODE/PHOTOGRPHY 5.jpg',
+    '/src/public/LIFE BEYONDCODE/PHOTOGRPHY 6.jpg',
+    '/src/public/LIFE BEYONDCODE/PHOTOGRPHY 7.jpg',
+    '/src/public/LIFE BEYONDCODE/PHOTOGRPHY 8.jpg',
+    '/src/public/LIFE BEYONDCODE/PHOTOGRPHY 9.jpg',
+    '/src/public/LIFE BEYONDCODE/PHOTOGRPHY 10.jpg',
+    '/src/public/LIFE BEYONDCODE/PHOTOGRPHY 11.jpg',
+    '/src/public/LIFE BEYONDCODE/PHOTOGRPHY 12.jpg',
+    '/src/public/LIFE BEYONDCODE/PHOTOGRPHY 13.jpg'
   ],
   travel: [
-    '/LIFE BEYONDCODE/TRAVEL 1.jpg',
-    '/LIFE BEYONDCODE/TRAVEL 2.jpg',
-    '/LIFE BEYONDCODE/TRAVEL 3.jpg',
-    '/LIFE BEYONDCODE/TRAVEL 4.jpg',
-    '/LIFE BEYONDCODE/TRAVEL 5.jpg',
-    '/LIFE BEYONDCODE/TRAVEL 6.jpg',
-    '/LIFE BEYONDCODE/TRAVEL 7.jpg',
-    '/LIFE BEYONDCODE/TRAVEL 8.jpg',
-    '/LIFE BEYONDCODE/TRAVEL 9.jpg',
-    '/LIFE BEYONDCODE/TRAVEL 10.jpg'
+    '/src/public/LIFE BEYONDCODE/TRAVEL 1.jpg',
+    '/src/public/LIFE BEYONDCODE/TRAVEL 2.jpg',
+    '/src/public/LIFE BEYONDCODE/TRAVEL 3.jpg',
+    '/src/public/LIFE BEYONDCODE/TRAVEL 4.jpg',
+    '/src/public/LIFE BEYONDCODE/TRAVEL 5.jpg',
+    '/src/public/LIFE BEYONDCODE/TRAVEL 6.jpg',
+    '/src/public/LIFE BEYONDCODE/TRAVEL 7.jpg',
+    '/src/public/LIFE BEYONDCODE/TRAVEL 8.jpg',
+    '/src/public/LIFE BEYONDCODE/TRAVEL 9.jpg',
+    '/src/public/LIFE BEYONDCODE/TRAVEL 10.jpg'
   ]
 };
 

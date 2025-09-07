@@ -33,7 +33,7 @@ const certificates = [
     verified: true,
     featured: true,
     color: 'from-gray-500 to-slate-500',
-    image: '/CERTIFICATES/LANGCHAIN.jpg',
+    image: '/src/public/CERTIFICATES/LANGCHAIN.jpg',
   },
   {
     title: 'Web Development Certification',
@@ -45,7 +45,7 @@ const certificates = [
     verified: true,
     featured: false,
     color: 'from-blue-500 to-cyan-500',
-    image: '/CERTIFICATES/NEXTZONE.jpg',
+    image: '/src/public/CERTIFICATES/NEXTZONE.jpg',
   },
   {
     title: 'AI/ML Certification',
@@ -57,7 +57,7 @@ const certificates = [
     verified: true,
     featured: false,
     color: 'from-purple-500 to-violet-500',
-    image: '/CERTIFICATES/EXTION.jpg',
+    image: '/src/public/CERTIFICATES/EXTION.jpg',
   },
   {
     title: 'Generative AI Certification',
@@ -69,7 +69,7 @@ const certificates = [
     verified: true,
     featured: true,
     color: 'from-orange-500 to-red-500',
-    image: '/CERTIFICATES/AWS.jpg',
+    image: '/src/public/CERTIFICATES/AWS.jpg',
   },
   {
     title: 'Full Stack Development',
@@ -81,7 +81,7 @@ const certificates = [
     verified: true,
     featured: false,
     color: 'from-green-500 to-emerald-500',
-    image: '/CERTIFICATES/COGNIFY.jpg',
+    image: '/src/public/CERTIFICATES/COGNIFY.jpg',
   },
   {
     title: 'Prompt Engineering',
@@ -93,7 +93,7 @@ const certificates = [
     verified: true,
     featured: false,
     color: 'from-pink-500 to-rose-500',
-    image: '/CERTIFICATES/PROMT ENGINERRING.jpg',
+    image: '/src/public/CERTIFICATES/PROMT ENGINERRING.jpg',
   },
   {
     title: 'Android Development',
@@ -105,7 +105,7 @@ const certificates = [
     verified: true,
     featured: true,
     color: 'from-indigo-500 to-purple-500',
-    image: '/CERTIFICATES/CODTECH IT SOL.jpg',
+    image: '/src/public/CERTIFICATES/CODTECH IT SOL.jpg',
   },
   {
     title: 'Frontend Development',
@@ -117,7 +117,7 @@ const certificates = [
     verified: true,
     featured: false,
     color: 'from-teal-500 to-green-500',
-    image: '/CERTIFICATES/INFOSYS.jpg',
+    image: '/src/public/CERTIFICATES/INFOSYS.jpg',
   },
  
   {
@@ -130,7 +130,7 @@ const certificates = [
     verified: true,
     featured: false,
     color: 'from-blue-600 to-purple-600',
-    image: '/CERTIFICATES/IBM AI.jpg',
+    image: '/src/public/CERTIFICATES/IBM AI.jpg',
   },
   {
     title: 'Data Science',
@@ -142,7 +142,7 @@ const certificates = [
     verified: true,
     featured: false,
     color: 'from-yellow-500 to-orange-500',
-    image: '/CERTIFICATES/IBM CLOUD.jpg',
+    image: '/src/public/CERTIFICATES/IBM CLOUD.jpg',
   },
   {
     title: 'College Ambassador',
@@ -154,7 +154,7 @@ const certificates = [
     verified: true,
     featured: false,
     color: 'from-emerald-500 to-teal-500',
-    image: '/CERTIFICATES/CAMPUS AMBACITOR.jpg',
+    image: '/src/public/CERTIFICATES/CAMPUS AMBACITOR.jpg',
   },
   {
     title: 'HacktoSkill Certificate',
@@ -166,7 +166,7 @@ const certificates = [
     verified: true,
     featured: false,
     color: 'from-red-500 to-pink-500',
-    image: '/CERTIFICATES/H2S.jpg',
+    image: '/src/public/CERTIFICATES/H2S.jpg',
   },
 ];
 
