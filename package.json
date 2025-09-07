@@ -3,11 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "preview": "vite preview --port $PORT --host 0.0.0.0"
-}
-,
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port $PORT --host 0.0.0.0"
+  },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-alert-dialog": "^1.1.6",
@@ -35,10 +34,12 @@
     "@radix-ui/react-toggle": "^1.1.2",
     "@radix-ui/react-toggle-group": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.8",
+    "@types/react-router-dom": "^5.3.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "*",
     "cmdk": "^1.1.1",
     "embla-carousel-react": "^8.6.0",
+    "gsap": "^3.13.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.487.0",
     "motion": "*",
@@ -48,8 +49,10 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.55.0",
     "react-resizable-panels": "^2.1.7",
+    "react-router-dom": "^7.8.2",
     "recharts": "^2.15.2",
     "sonner": "^2.0.3",
+    "styled-components": "^6.1.19",
     "tailwind-merge": "*",
     "vaul": "^1.1.2"
   },

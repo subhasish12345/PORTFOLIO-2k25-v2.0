@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Heart, Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
+import { Heart, Github, Linkedin, Mail, ArrowUp, X } from 'lucide-react';
 import { Button } from './ui/button';
+import Pattern from './PatternBackground';
 
 const quickLinks = [
   { label: 'Home', href: '#hero' },
@@ -18,8 +19,8 @@ const services = [
 ];
 
 const socialLinks = [
-  { icon: Github, href: '#', label: 'GitHub' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
+  { icon: Github, href: 'https://github.com/subhasish12345', label: 'GitHub' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/in/subhasish-nayak-67a257280/', label: 'LinkedIn' },
   { icon: Mail, href: 'mailto:subahsishnayak38@gmail.com', label: 'Email' },
 ];
 
@@ -89,19 +90,19 @@ export default function Footer() {
             <span>and lots of ☕</span>
           </div>
           
-          <div className="flex items-center space-x-4">
-            <span className="text-sm text-muted-foreground">
-              Built with React + Tailwind CSS
-            </span>
-            <Button
-              onClick={scrollToTop}
-              variant="outline"
-              size="sm"
-              className="rounded-full p-2 hover:bg-primary/10"
-            >
-              <ArrowUp className="h-4 w-4" />
-            </Button>
-          </div>
+      <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 text-center md:text-left">
+        <span className="text-sm text-muted-foreground order-2 md:order-1">
+          Built with React + Tailwind CSS
+        </span>
+        <Button
+          onClick={scrollToTop}
+          variant="outline"
+          size="sm"
+          className="rounded-full p-2 hover:bg-primary/10 order-1 md:order-2"
+        >
+          <ArrowUp className="h-4 w-4" />
+        </Button>
+      </div>
         </motion.div>
 
       </div>

@@ -11,7 +11,6 @@ import Certificates from './components/Certificates';
 import LifeBeyondCode from './components/LifeBeyondCode';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import NanitesButton from './components/NanitesButton';
 import AnimatedBackground from './components/AnimatedBackground';
 import { ThemeProvider } from './components/ThemeProvider';
 
@@ -70,7 +69,6 @@ export default function App() {
             </section>
           </main>
           
-          <NanitesButton />
           <Footer />
         </div>
       </div>

@@ -1,7 +1,10 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import React, { useEffect, useRef } from 'react';
 import { MapPin, Mail, Phone, GraduationCap, Calendar } from 'lucide-react';
 import { Card, CardContent } from './ui/card';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const personalInfo = [
   { icon: MapPin, label: 'Location', value: 'Bhubaneswar, Odisha, India' },
@@ -29,49 +32,164 @@ const education = [
 ];
 
 export default function About() {
+  const aboutRef = useRef(null);
+  const titleRef = useRef(null);
+  const leftContentRef = useRef(null);
+  const rightContentRef = useRef(null);
+  const personalInfoRefs = useRef([]);
+  const educationRefs = useRef([]);
+  const quoteRef = useRef(null);
+  const statsRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Title animation
+      gsap.fromTo(titleRef.current,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: titleRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Left content animation
+      gsap.fromTo(leftContentRef.current,
+        { opacity: 0, x: -50 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: leftContentRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Personal info cards stagger animation
+      gsap.fromTo(personalInfoRefs.current,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: personalInfoRefs.current[0],
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Quote animation
+      gsap.fromTo(quoteRef.current,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: quoteRef.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Right content animation
+      gsap.fromTo(rightContentRef.current,
+        { opacity: 0, x: 50 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: rightContentRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Education cards stagger animation
+      gsap.fromTo(educationRefs.current,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: educationRefs.current[0],
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+      // Stats animation
+      gsap.fromTo(statsRef.current,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: statsRef.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+          }
+        }
+      );
+
+    }, aboutRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="py-20">
+    <section ref={aboutRef} className="py-20">
       <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
+        <div ref={titleRef} className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             About <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Me</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Final-year CSE student at Gandhi Engineering College. Exploring Web, AI/ML, and Mobile development 
-            through projects, internships, and hackathons. Blending creativity with technical depth to build 
+            Final-year CSE student at Gandhi Engineering College. Exploring Web, AI/ML, and Mobile development
+            through projects, internships, and hackathons. Blending creativity with technical depth to build
             innovative solutions.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Personal Information */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
-          >
+          <div ref={leftContentRef} className="space-y-8">
             <div>
               <h3 className="text-2xl font-bold mb-6 flex items-center">
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full mr-3" />
                 Personal Information
               </h3>
-              
+
               <div className="space-y-4">
                 {personalInfo.map((info, index) => (
-                  <motion.div
+                  <div
                     key={info.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                    ref={el => personalInfoRefs.current[index] = el}
                   >
                     <Card className="bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-300">
                       <CardContent className="p-4">
@@ -86,53 +204,39 @@ export default function About() {
                         </div>
                       </CardContent>
                     </Card>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
 
             {/* Quote/Mission */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-            >
+            <div ref={quoteRef}>
               <Card className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-primary/20 backdrop-blur-sm">
                 <CardContent className="p-6">
                   <blockquote className="text-lg italic text-center">
-                    "Passionate about creating innovative solutions that bridge the gap between 
-                    technology and human needs. Every line of code is a step towards building 
+                    "Passionate about creating innovative solutions that bridge the gap between
+                    technology and human needs. Every line of code is a step towards building
                     a better digital future."
                   </blockquote>
                   <p className="text-center mt-4 text-muted-foreground">- Subhasish Nayak</p>
                 </CardContent>
               </Card>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           {/* Education */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
-          >
+          <div ref={rightContentRef} className="space-y-8">
             <div>
               <h3 className="text-2xl font-bold mb-6 flex items-center">
                 <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mr-3" />
                 Education
               </h3>
-              
+
               <div className="space-y-6">
                 {education.map((edu, index) => (
-                  <motion.div
+                  <div
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                    ref={el => educationRefs.current[index] = el}
                   >
                     <Card className="bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
                       <CardContent className="p-6">
@@ -154,20 +258,15 @@ export default function About() {
                         </div>
                       </CardContent>
                     </Card>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
 
             {/* Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-            >
+            <div ref={statsRef}>
               <Card className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-primary/20 backdrop-blur-sm">
-                <CardContent className="p-6">
+                <CardContent className="p-8">
                   <div className="grid grid-cols-2 gap-6 text-center">
                     <div>
                       <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -196,8 +295,8 @@ export default function About() {
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
