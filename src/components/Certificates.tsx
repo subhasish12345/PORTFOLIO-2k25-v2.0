@@ -25,6 +25,18 @@ function CertificateModal({ open, onClose, imgSrc }: { open: boolean, onClose: (
 const certificates = [
   {
     title: 'AI Cloud & LangChain',
+    issuer: 'Edunet',
+    date: '2025',
+    category: 'AI',
+    description: 'Cloud-based AI solutions and LangChain framework implementation.',
+    skills: ['IBM Watson', 'LangChain', 'Cloud AI', 'APIs'],
+    verified: true,
+    featured: true,
+    color: 'from-gray-500 to-slate-500',
+    image: '/CERTIFICATES/edunet.jpg',
+  },
+  {
+    title: 'AI Cloud & LangChain',
     issuer: 'IBM',
     date: '2024',
     category: 'Cloud AI',
