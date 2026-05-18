@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Award, ExternalLink, Calendar, CheckCircle, Star } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
 function CertificateModal({ open, onClose, imgSrc }: { open: boolean, onClose: () => void, imgSrc: string }) {
   if (!open) return null;
@@ -22,7 +24,7 @@ function CertificateModal({ open, onClose, imgSrc }: { open: boolean, onClose: (
   );
 }
 
-const certificates = [
+export const certificatesData = [
   {
     title: 'AI Cloud ',
     issuer: 'Edunet',
@@ -198,6 +200,42 @@ const categoryColors = {
 export default function Certificates() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedImg, setSelectedImg] = useState<string>("");
+  const [certificates, setCertificates] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCertificates = async () => {
+      try {
+        const snap = await getDocs(collection(db, 'certificates'));
+        const data = snap.docs.map(doc => {
+          // Assign random colors based on category if color not present
+          const cats = Object.keys(categoryColors);
+          const colorKey = cats.includes(doc.data().category) ? doc.data().category : cats[0];
+          
+          return {
+            id: doc.id,
+            title: doc.data().title,
+            issuer: doc.data().issuer,
+            date: doc.data().date,
+            category: doc.data().category,
+            description: doc.data().description,
+            skills: doc.data().skills ? doc.data().skills.split(',').map((s: string) => s.trim()) : [],
+            verified: doc.data().verified,
+            featured: doc.data().featured,
+            image: doc.data().image,
+            color: 'from-blue-500 to-cyan-500' // fallback color gradient
+          };
+        });
+        
+        setCertificates(data);
+      } catch (err) {
+        console.error('Failed to fetch certificates', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCertificates();
+  }, []);
 
   const handleView = (img: string) => {
     setSelectedImg(img);
@@ -206,6 +244,14 @@ export default function Certificates() {
 
   const featuredCertificates = certificates.filter(cert => cert.featured);
   const otherCertificates = certificates.filter(cert => !cert.featured);
+
+  if (loading) {
+    return (
+      <section className="py-20 flex justify-center items-center min-h-[50vh]">
+        <p className="text-[#a1a1aa] animate-pulse">Loading certificates...</p>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20">

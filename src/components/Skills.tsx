@@ -1,43 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Code, Smartphone, Database, Settings, Palette, Brain } from 'lucide-react';
+import * as Icons from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
-const skillCategories = [
+export const skillCategoriesData = [
   {
     title: 'Web Development',
-    icon: Code,
+    icon: Icons.Code,
     color: 'from-blue-500 to-cyan-500',
     skills: ['HTML', 'CSS', 'JavaScript', 'React', 'Next.js', 'Tailwind CSS'],
   },
   {
     title: 'Mobile Development',
-    icon: Smartphone,
+    icon: Icons.Smartphone,
     color: 'from-green-500 to-emerald-500',
     skills: ['Android Studio', 'Java', 'Flutter', 'XML',],
   },
   {
     title: 'Backend & Databases',
-    icon: Database,
+    icon: Icons.Database,
     color: 'from-purple-500 to-violet-500',
     skills: ['Firebase', 'Supabase', 'MongoDB', 'XAMPP', 'Python', 'Data Analysis'],
   },
   {
     title: 'Development Tools',
-    icon: Settings,
+    icon: Icons.Settings,
     color: 'from-orange-500 to-red-500',
     skills: ['VS Code', 'Postman', 'GitHub', 'Windsurf', 'Cursor'],
   },
   {
     title: 'AI Tools',
-    icon: Brain,
+    icon: Icons.Brain,
     color: 'from-pink-500 to-rose-500',
     skills: ['ChatGPT', 'Gemini Pro', 'Perplexity PRO', 'Copilot', 'Cursor AI', 'COPILOT',],
   },
   {
     title: 'Creative Tools',
-    icon: Palette,
+    icon: Icons.Palette,
     color: 'from-indigo-500 to-purple-500',
     skills: ['RENDER', 'Canva', 'PixelCut', 'PhotoRoom', 'Figma'],
   },
@@ -65,6 +67,56 @@ const itemVariants = {
 };
 
 export default function Skills() {
+  const [skills, setSkills] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        const snap = await getDocs(collection(db, 'skills'));
+        const data = snap.docs
+          .filter(doc => doc.data().title !== 'AI Tools')
+          .map((doc, index) => {
+          const rawIcon = doc.data().icon || 'Code';
+          // Find matching icon from lucide-react, fallback to Code
+          const IconComponent = (Icons as any)[rawIcon] || Icons.Code;
+          
+          const colors = [
+            'from-blue-500 to-cyan-500',
+            'from-green-500 to-emerald-500',
+            'from-purple-500 to-violet-500',
+            'from-orange-500 to-red-500',
+            'from-pink-500 to-rose-500',
+            'from-indigo-500 to-purple-500'
+          ];
+          
+          return {
+            id: doc.id,
+            title: doc.data().title,
+            icon: IconComponent,
+            color: colors[index % colors.length], // Cycle through colors
+            skills: doc.data().skills ? doc.data().skills.split(',').map((s: string) => s.trim()) : []
+          };
+        });
+        
+        setSkills(data);
+      } catch (err) {
+        console.error('Failed to fetch skills', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchSkills();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-20 flex justify-center items-center min-h-[50vh]">
+        <p className="text-[#a1a1aa] animate-pulse">Loading skills...</p>
+      </section>
+    );
+  }
+
   return (
     <section className="py-20">
       <div className="container mx-auto px-6">
@@ -91,8 +143,8 @@ export default function Skills() {
           viewport={{ once: true }}
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {skillCategories.map((category, index) => (
-            <motion.div key={category.title} variants={itemVariants}>
+          {skills.map((category, index) => (
+            <motion.div key={category.id || category.title} variants={itemVariants}>
               <Card className="h-full bg-background/50 backdrop-blur-sm border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 group">
                 <CardHeader className="pb-4">
                   <div className="flex items-center space-x-3 mb-4">
@@ -135,63 +187,6 @@ export default function Skills() {
           ))}
         </motion.div>
 
-        {/* Professional Development Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="mt-16"
-        >
-          <Card className="bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 border-primary/20 backdrop-blur-sm">
-            <CardContent className="p-8">
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold mb-4">
-                  Continuous Learning & Growth
-                </h3>
-                <p className="text-muted-foreground">
-                  Always exploring new technologies and expanding my skill set through courses,
-                  certifications, and hands-on projects.
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-3 gap-6">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="text-center p-6 rounded-xl bg-background/30 backdrop-blur-sm"
-                >
-                  <div className="text-3xl mb-3">🎓</div>
-                  <h4 className="font-semibold mb-2">Formal Education</h4>
-                  <p className="text-sm text-muted-foreground">
-                    B.Tech CSE with strong fundamentals in computer science and engineering principles
-                  </p>
-                </motion.div>
-
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="text-center p-6 rounded-xl bg-background/30 backdrop-blur-sm"
-                >
-                  <div className="text-3xl mb-3">🚀</div>
-                  <h4 className="font-semibold mb-2">Practical Experience</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Multiple internships and real-world projects across different tech domains
-                  </p>
-                </motion.div>
-
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  className="text-center p-6 rounded-xl bg-background/30 backdrop-blur-sm"
-                >
-                  <div className="text-3xl mb-3">💡</div>
-                  <h4 className="font-semibold mb-2">Innovation Focus</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Competitive programming to stay at the cutting edge
-                  </p>
-                </motion.div>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
       </div>
     </section>
   );

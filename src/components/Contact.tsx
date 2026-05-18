@@ -1,214 +1,212 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Instagram, Twitter, MessageSquare, Clock, User } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Textarea } from './ui/textarea';
-import { Label } from './ui/label';
-import { Badge } from './ui/badge';
-import { toast } from 'sonner@2.0.3';
+import { Mail, Phone, MapPin, Github, Linkedin, Instagram, Twitter, Send, CheckCircle } from 'lucide-react';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../lib/firebase';
+
+const contactLinks = [
+  { icon: Github, label: 'GitHub', value: '@subhasish12345', href: 'https://github.com/subhasish12345', color: 'text-white' },
+  { icon: Linkedin, label: 'LinkedIn', value: 'Subhasish Nayak', href: 'https://www.linkedin.com/in/subhasish-nayak-67a257280/', color: 'text-white' },
+  { icon: Twitter, label: 'X (Twitter)', value: '@Subhunew1Nayak', href: 'https://x.com/Subhunew1Nayak?t=etWteaHNxNcUim6I600csQ&s=09', color: 'text-white' },
+  { icon: Instagram, label: 'Instagram', value: '@subhasish_nayak_', href: 'https://www.instagram.com/subhasish_nayak_?igsh=OXF2ODZscGc1dzRw', color: 'text-white' },
+];
+
+const infoItems = [
+  { icon: Mail, label: 'Email', value: 'subahsishnayak38@gmail.com', href: 'mailto:subahsishnayak38@gmail.com' },
+  { icon: Phone, label: 'Phone', value: '+91 7750096113' },
+  { icon: MapPin, label: 'Location', value: 'Bhubaneswar, Odisha, India' },
+];
 
 export default function Contact() {
+  const [name, setName] = useState('');
+  const [message, setMessage] = useState('');
+  const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!message.trim()) return;
+    setLoading(true);
+    setError('');
+    try {
+      await addDoc(collection(db, 'visitorSuggestions'), {
+        name: name.trim() || 'Anonymous',
+        message: message.trim(),
+        status: 'pending',
+        createdAt: serverTimestamp(),
+      });
+      setSent(true);
+      setName('');
+      setMessage('');
+    } catch (err) {
+      setError('Something went wrong. Please try again.');
+    }
+    setLoading(false);
+  };
 
   return (
-    <section className="py-20">
-      <div className="container mx-auto px-6">
+    <section className="py-24 bg-[#111] border-t border-[#27272a]">
+      <div className="max-w-6xl mx-auto px-6">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="mb-14"
         >
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <MessageSquare className="w-6 h-6 text-cyan-400" />
-            <h2 className="text-4xl font-bold">Get In Touch</h2>
-          </div>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            🚀 Ready to collaborate on innovative projects? Let's discuss how we can build the
-            future together with cutting-edge technology and creative solutions.
+          <span className="font-mono text-xs text-[#a1a1aa] tracking-widest uppercase">Contact</span>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">
+            Let's build something.
+          </h2>
+          <p className="text-[#a1a1aa] mt-2 text-sm max-w-md">
+            Open to internships, freelance projects, and collaboration.
+            Reach out directly or leave a suggestion below.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-1 gap-8 max-w-4xl mx-auto">
-          {/* Contact Information Card */}
+        <div className="grid lg:grid-cols-2 gap-16">
+          {/* Left — Contact Info */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="space-y-8"
           >
-            <Card className="glass">
-              <CardHeader className="pb-4">
-                <CardTitle className="text-xl flex items-center gap-2">
-                  <Phone className="w-5 h-5 text-cyan-400" />
-                  Contact Information
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center gap-3 p-3 rounded-lg glass">
-                  <div className="p-2 rounded-lg bg-cyan-500/20">
-                    <Mail className="w-4 h-4 text-cyan-400" />
+            {/* Direct Contact */}
+            <div className="space-y-3">
+              {infoItems.map((item) => (
+                <div key={item.label} className="flex items-center gap-4">
+                  <div className="p-2 border border-[#27272a] rounded">
+                    <item.icon className="h-4 w-4 text-[#a1a1aa]" />
                   </div>
-                  <div className="flex-1">
-                    <p className="text-sm text-cyan-400 font-medium">Email</p>
-                    <p className="text-sm text-muted-foreground">subahsishnayak38@gmail.com</p>
-                    <p className="text-xs text-muted-foreground">Best way to reach me</p>
+                  <div>
+                    <p className="text-xs text-[#52525b] font-mono uppercase tracking-wider">{item.label}</p>
+                    {item.href ? (
+                      <a href={item.href} className="text-sm text-white hover:text-[#a1a1aa] transition-colors">{item.value}</a>
+                    ) : (
+                      <p className="text-sm text-white">{item.value}</p>
+                    )}
                   </div>
                 </div>
+              ))}
+            </div>
 
-                <div className="flex items-center gap-3 p-3 rounded-lg glass">
-                  <div className="p-2 rounded-lg bg-green-500/20">
-                    <Phone className="w-4 h-4 text-green-400" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm text-green-400 font-medium">Phone</p>
-                    <p className="text-sm text-muted-foreground">+91 7750096113</p>
-                    <p className="text-xs text-muted-foreground">Available 10 AM to 8 PM IST</p>
-                  </div>
+            {/* Social Links */}
+            <div>
+              <p className="text-xs font-mono text-[#52525b] uppercase tracking-wider mb-4">Find Me Online</p>
+              <div className="grid grid-cols-2 gap-3">
+                {contactLinks.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-3 border border-[#27272a] rounded hover:border-[#52525b] transition-colors group"
+                  >
+                    <link.icon className="h-4 w-4 text-[#a1a1aa] group-hover:text-white transition-colors" />
+                    <div>
+                      <p className="text-xs text-white font-medium">{link.label}</p>
+                      <p className="text-[10px] text-[#52525b]">{link.value}</p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Availability */}
+            <div className="border border-[#27272a] rounded-lg p-5 space-y-3">
+              <p className="text-xs font-mono text-[#52525b] uppercase tracking-wider">Availability</p>
+              {[
+                { label: 'Freelance / Contracts', status: 'Open', on: true },
+                { label: 'Collaboration', status: 'Open', on: true },
+                { label: 'Full-time (post graduation)', status: 'Interested', on: true },
+                { label: 'Internship', status: 'Not available', on: false },
+              ].map(a => (
+                <div key={a.label} className="flex items-center justify-between">
+                  <span className="text-sm text-[#a1a1aa]">{a.label}</span>
+                  <span className={`text-xs font-mono px-2 py-0.5 rounded-full border ${a.on ? 'text-white border-white/20 bg-white/5' : 'text-[#52525b] border-[#27272a]'}`}>
+                    {a.status}
+                  </span>
                 </div>
+              ))}
+            </div>
+          </motion.div>
 
-                <div className="flex items-center gap-3 p-3 rounded-lg glass">
-                  <div className="p-2 rounded-lg bg-purple-500/20">
-                    <MapPin className="w-4 h-4 text-purple-400" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm text-purple-400 font-medium">Location</p>
-                    <p className="text-sm text-muted-foreground">Bhubaneswar, Odisha, India</p>
-                    <p className="text-xs text-muted-foreground">Open to remote opportunities</p>
-                  </div>
-                </div>
+          {/* Right — Suggestion Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <div className="border border-[#27272a] rounded-lg p-6">
+              <p className="text-xs font-mono text-[#a1a1aa] uppercase tracking-wider mb-1">Leave a Suggestion</p>
+              <p className="text-[#52525b] text-xs mb-6">
+                Have feedback, ideas, or want to say something? I read every message.
+                Your message goes to a moderated queue before appearing publicly.
+              </p>
 
-                <div className="flex items-center gap-3 p-3 rounded-lg glass">
-                  <div className="p-2 rounded-lg bg-orange-500/20">
-                    <Clock className="w-4 h-4 text-orange-400" />
+              {sent ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex flex-col items-center justify-center py-12 gap-4"
+                >
+                  <CheckCircle className="h-10 w-10 text-white" />
+                  <div className="text-center">
+                    <p className="text-white font-semibold">Message received.</p>
+                    <p className="text-[#a1a1aa] text-sm mt-1">I'll review it soon. Thank you.</p>
                   </div>
-                  <div className="flex-1">
-                    <p className="text-sm text-orange-400 font-medium">Response Time</p>
-                    <p className="text-sm text-muted-foreground">&lt; 24 hours</p>
-                    <p className="text-xs text-muted-foreground">Typical response time</p>
+                  <button
+                    onClick={() => setSent(false)}
+                    className="text-xs text-[#52525b] hover:text-white transition-colors mt-2"
+                  >
+                    Send another
+                  </button>
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {error && (
+                    <div className="bg-red-500/10 border border-red-500/30 text-red-400 text-xs p-3 rounded">
+                      {error}
+                    </div>
+                  )}
+                  <div>
+                    <label className="block text-xs text-[#a1a1aa] mb-1.5">Your Name (optional)</label>
+                    <input
+                      value={name}
+                      onChange={e => setName(e.target.value)}
+                      placeholder="Anonymous"
+                      className="w-full bg-black border border-[#27272a] rounded px-4 py-2.5 text-sm text-white placeholder-[#52525b] focus:outline-none focus:border-white transition-colors"
+                    />
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Connect With Me Card */}
-            <Card className="glass">
-              <CardHeader className="pb-4">
-                <CardTitle className="text-xl flex items-center gap-2">
-                  <User className="w-5 h-5 text-orange-400" />
-                  Connect With Me
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <a href="https://github.com/subhasish12345" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-lg glass hover:bg-gray-500/10 transition-colors">
-                  <div className="p-2 rounded-lg bg-gray-500/20">
-                    <Github className="w-4 h-4 text-gray-400" />
+                  <div>
+                    <label className="block text-xs text-[#a1a1aa] mb-1.5">Message *</label>
+                    <textarea
+                      required
+                      rows={5}
+                      value={message}
+                      onChange={e => setMessage(e.target.value)}
+                      placeholder="I noticed your portfolio is missing..."
+                      className="w-full bg-black border border-[#27272a] rounded px-4 py-2.5 text-sm text-white placeholder-[#52525b] focus:outline-none focus:border-white transition-colors resize-none"
+                    />
                   </div>
-                  <div className="flex-1">
-                    <p className="text-sm text-gray-400 font-medium">GitHub</p>
-                    <p className="text-sm text-muted-foreground">@subhasish12345</p>
-                    <p className="text-xs text-muted-foreground">Code repositories & projects</p>
-                  </div>
-                </a>
-
-                <a href="https://www.linkedin.com/in/subhasish-nayak-67a257280/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-lg glass hover:bg-blue-500/10 transition-colors">
-                  <div className="p-2 rounded-lg bg-blue-500/20">
-                    <Linkedin className="w-4 h-4 text-blue-400" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm text-blue-400 font-medium">LinkedIn</p>
-                    <p className="text-sm text-muted-foreground">Subhasish Nayak</p>
-                    <p className="text-xs text-muted-foreground">Professional network</p>
-                  </div>
-                </a>
-
-                <a href="https://www.instagram.com/subhasish_nayak_?igsh=OXF2ODZscGc1dzRw" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-lg glass hover:bg-pink-500/10 transition-colors">
-                  <div className="p-2 rounded-lg bg-pink-500/20">
-                    <Instagram className="w-4 h-4 text-pink-400" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm text-pink-400 font-medium">Instagram</p>
-                    <p className="text-sm text-muted-foreground">@subhasish_nayak_</p>
-                    <p className="text-xs text-muted-foreground">Daily updates & behind the scenes</p>
-                  </div>
-                </a>
-
-                <a href="https://x.com/Subhunew1Nayak?t=etWteaHNxNcUim6I600csQ&s=09" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 rounded-lg glass hover:bg-sky-500/10 transition-colors">
-                  <div className="p-2 rounded-lg bg-sky-500/20">
-                    <Twitter className="w-4 h-4 text-sky-400" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm text-sky-400 font-medium">Twitter</p>
-                    <p className="text-sm text-sky-400 font-medium">X (Twitter)</p>
-                    <p className="text-sm text-muted-foreground">@Subhunew1Nayak</p>
-                    <p className="text-xs text-muted-foreground">Tech updates & thoughts</p>
-                  </div>
-                </a>
-              </CardContent>
-            </Card>
-
-            {/* Current Availability Card */}
-            <Card className="glass">
-              <CardContent className="p-6">
-                <h3 className="font-semibold mb-4">Current Availability</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Internship Opportunities</span>
-                    <Badge className="bg-red-500/20 text-red-400 hover:bg-red-500/30">Not Available</Badge>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Freelance Projects</span>
-                    <Badge className="bg-green-500/20 text-green-400 hover:bg-green-500/30">Available</Badge>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Collaboration</span>
-                    <Badge className="bg-green-500/20 text-green-400 hover:bg-green-500/30">Open</Badge>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Full-time Roles (2025)</span>
-                    <Badge className="bg-yellow-500/20 text-yellow-400 hover:bg-yellow-500/30">Interested</Badge>
-                  </div>
-                </div>
-                <div className="mt-4 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
-                  <p className="text-xs text-green-400">
-                    📅 Currently in final year of CSE. Available for part-time work and exciting full-time
-                    opportunities post-graduation.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-white text-black text-sm font-semibold py-2.5 rounded hover:bg-gray-100 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                  >
+                    <Send className="h-4 w-4" />
+                    {loading ? 'Sending...' : 'Send Message'}
+                  </button>
+                </form>
+              )}
+            </div>
           </motion.div>
         </div>
-
-        {/* Profile Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-12 max-w-4xl mx-auto"
-        >
-          <Card className="glass">
-            <CardContent className="p-8 text-center">
-              <div className="w-20 h-20 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <User className="w-10 h-10 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold mb-2">SUBHASISH NAYAK</h3>
-              <p className="text-muted-foreground mb-4">
-                🚀 Building the Future with Code | 🤖 Android Developer | 🧠 AI/ML Enthusiast
-              </p>
-              <Button className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-white">
-                MEET THE NANITES
-              </Button>
-              <p className="text-xs text-muted-foreground mt-4">
-                Built with ❤️ by SUBHASISH NAYAK &copy; 2025
-              </p>
-            </CardContent>
-          </Card>
-        </motion.div>
       </div>
     </section>
   );

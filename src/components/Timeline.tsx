@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Calendar, MapPin, ExternalLink } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
-const timelineEvents = [
+export const timelineEventsData = [
   {
     title: 'Data Analysis Trainee',
     company: 'Qspiders',
@@ -109,6 +111,46 @@ const timelineEvents = [
 
 ]
 export default function Timeline() {
+  const [timelineEvents, setTimelineEvents] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTimeline = async () => {
+      try {
+        const snap = await getDocs(collection(db, 'timeline'));
+        const data = snap.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          technologies: doc.data().technologies ? doc.data().technologies.split(',').map((s: string) => s.trim()) : [],
+          color: 'from-blue-500 to-cyan-500' // fallback color
+        }));
+        
+        // Sort by order ascending if available, else by period descending
+        data.sort((a: any, b: any) => {
+          if (a.order !== undefined && b.order !== undefined) {
+            return a.order - b.order;
+          }
+          return b.period.localeCompare(a.period);
+        });
+        
+        setTimelineEvents(data);
+      } catch (err) {
+        console.error('Failed to fetch timeline', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTimeline();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-20 flex justify-center items-center min-h-[50vh]">
+        <p className="text-[#a1a1aa] animate-pulse">Loading timeline...</p>
+      </section>
+    );
+  }
+
   return (
     <section className="py-20">
       <div className="container mx-auto px-6">
@@ -133,10 +175,9 @@ export default function Timeline() {
           <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 transform md:-translate-x-1/2" />
 
           <div className="space-y-12">
-            ;
             {timelineEvents.map((event, index) => (
               <motion.div
-                key={index}
+                key={event.id || index}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

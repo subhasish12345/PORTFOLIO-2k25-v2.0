@@ -19,16 +19,6 @@ const education = [
     status: '8th Semester, 4th Year',
     year: '2022-2026',
   },
-  {
-    degree: '12th Standard (78%)',
-    institution: 'Bidwan Residential College',
-    year: '2022',
-  },
-  {
-    degree: '10th Standard (69%)',
-    institution: 'Saraswati Sishu Vidya Mandir',
-    year: '2020',
-  },
 ];
 
 export default function About() {
@@ -170,9 +160,7 @@ export default function About() {
             About <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Me</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Final-year CSE student at Gandhi Engineering College. Exploring Web, AI/ML, and Mobile development
-            through projects, internships, and hackathons. Blending creativity with technical depth to build
-            innovative solutions.
+            Full Stack Developer with experience building AI-powered and scalable web applications using React, Next.js, Firebase, and modern frontend technologies. Developed multiple production-style projects including StudentHub, a comprehensive university management platform with role-based dashboards, attendance tracking, notifications, and student collaboration features. Passionate about building user-centric applications with clean UI and real-world impact.
           </p>
         </div>
 
@@ -270,27 +258,27 @@ export default function About() {
                   <div className="grid grid-cols-2 gap-6 text-center">
                     <div>
                       <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                        8+
+                        4+
                       </div>
-                      <p className="text-sm text-muted-foreground">Major Projects </p>
+                      <p className="text-sm text-muted-foreground">Production Projects </p>
                     </div>
                     <div>
                       <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                        19+
+                        100%
                       </div>
-                      <p className="text-sm text-muted-foreground">Minor Projects</p>
+                      <p className="text-sm text-muted-foreground">Open Source</p>
                     </div>
                     <div>
                       <div className="text-3xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-                        8+
+                        2+
                       </div>
                       <p className="text-sm text-muted-foreground">Internships</p>
                     </div>
                     <div>
                       <div className="text-3xl font-bold bg-gradient-to-r from-pink-600 to-red-600 bg-clip-text text-transparent">
-                        21+
+                        3+
                       </div>
-                      <p className="text-sm text-muted-foreground">Certificates</p>
+                      <p className="text-sm text-muted-foreground">Hackathons Won</p>
                     </div>
                   </div>
                 </CardContent>

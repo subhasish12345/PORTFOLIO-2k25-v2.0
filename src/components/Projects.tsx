@@ -5,8 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../lib/firebase';
 
-const projects = [
+export const projectsData = [
   {
     title: 'AI Powered Resume & JD Checker',
     description: 'Intelligent resume analysis and job description matching system using advanced NLP algorithms to help job seekers optimize their applications.',
@@ -102,19 +104,55 @@ const categoryColors = {
 };
 
 export default function Projects() {
+  const [projects, setProjects] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const snap = await getDocs(collection(db, 'projects'));
+        const data = snap.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          technologies: doc.data().techStack ? doc.data().techStack.split(',').map((s: string) => s.trim()) : [],
+          links: {
+            demo: doc.data().liveLink,
+            github: doc.data().github,
+          },
+          color: 'from-blue-500 to-cyan-500' // fallback color
+        }));
+        setProjects(data);
+      } catch (err) {
+        console.error('Failed to fetch projects', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
+
   const reorderedFeaturedTitles = [
-    'TechFest Website',
+    'College Management + Attendance',
+    'AI Powered Resume & JD Checker',
     'Interactive Career Guide',
-    'Interactive Art Gallery',
+    'TechFest Website',
   ];
 
   const updatedFeaturedProjects = reorderedFeaturedTitles.map(title =>
     projects.find(project => project.title === title)
-  ).filter(Boolean) as typeof projects;
+  ).filter(Boolean);
 
   const aiProject = projects.find(project => project.title === 'AI Powered Resume & JD Checker');
 
-  const updatedOtherProjects = projects.filter(project => !reorderedFeaturedTitles.includes(project.title) && project.title !== 'AI Powered Resume & JD Checker');
+  const updatedOtherProjects: any[] = [];
+
+  if (loading) {
+    return (
+      <section className="py-20 flex justify-center items-center min-h-[50vh]">
+        <p className="text-[#a1a1aa] animate-pulse">Loading projects...</p>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20">
@@ -331,27 +369,27 @@ export default function Projects() {
               <div className="grid md:grid-cols-4 gap-6 text-center">
                 <div>
                   <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-                    8+
+                    4+
                   </div>
-                  <p className="text-muted-foreground">Major Projects</p>
+                  <p className="text-muted-foreground">Production Projects</p>
                 </div>
                 <div>
                   <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
-                    20+
-                  </div>
-                  <p className="text-muted-foreground">Minor Projects</p>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-2">
-                    6
-                  </div>
-                  <p className="text-muted-foreground">Featured Projects On GITHUB</p>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-2">
                     100%
                   </div>
                   <p className="text-muted-foreground">Open Source</p>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-2">
+                    4
+                  </div>
+                  <p className="text-muted-foreground">Featured Repositories</p>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-2">
+                    2+
+                  </div>
+                  <p className="text-muted-foreground">Years Experience</p>
                 </div>
               </div>
             </CardContent>

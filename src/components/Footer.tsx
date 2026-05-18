@@ -1,22 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'motion/react';
-import { Heart, Github, Linkedin, Mail, ArrowUp, X } from 'lucide-react';
-import { Button } from './ui/button';
-import Pattern from './PatternBackground';
-
-const quickLinks = [
-  { label: 'Home', href: '#hero' },
-  { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Projects', href: '#projects' },
-];
-
-const services = [
-  { label: 'Web Development', href: '#' },
-  { label: 'Mobile Apps', href: '#' },
-  { label: 'AI/ML Solutions', href: '#' },
-  { label: 'Consulting', href: '#' },
-];
+import { Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
 
 const socialLinks = [
   { icon: Github, href: 'https://github.com/subhasish12345', label: 'GitHub' },
@@ -25,87 +9,42 @@ const socialLinks = [
 ];
 
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
-    <footer className="relative bg-background/50 backdrop-blur-sm border-t border-border/50">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20" />
-      </div>
+    <footer className="bg-black border-t border-[#27272a]">
+      <div className="max-w-6xl mx-auto px-6 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+        {/* Branding */}
+        <div className="flex flex-col items-center md:items-start gap-1">
+          <span className="font-mono text-white font-bold tracking-widest">SN<span className="text-[#a1a1aa]">.dev</span></span>
+          <span className="text-xs text-[#52525b]">© {new Date().getFullYear()} Subhasish Nayak. All rights reserved.</span>
+        </div>
 
-      <div className="relative container mx-auto px-6 py-16">
-        {/* Social Links */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex justify-center space-x-4 mb-12"
-        >
-          {socialLinks.map((social, index) => (
+        {/* Social */}
+        <div className="flex items-center gap-3">
+          {socialLinks.map((social) => (
             <motion.a
               key={social.label}
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 rounded-full bg-background/50 backdrop-blur-sm border border-border/50 hover:border-primary/50 hover:bg-primary/10 transition-all duration-300"
-              whileHover={{ scale: 1.1, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.3 }}
+              aria-label={social.label}
+              whileHover={{ y: -2 }}
+              className="p-2 text-[#a1a1aa] hover:text-white border border-[#27272a] hover:border-[#52525b] rounded transition-all duration-200"
             >
-              <social.icon className="h-5 w-5" />
+              <social.icon className="h-4 w-4" />
             </motion.a>
           ))}
-        </motion.div>
+        </div>
 
-        {/* Bottom Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-border/50"
-        >
-          <div className="flex items-center space-x-2 text-muted-foreground mb-4 md:mb-0">
-            <span>© 2025 Subhasish Nayak. Made with</span>
-            <motion.div
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <Heart className="h-4 w-4 text-red-500 fill-current" />
-            </motion.div>
-            <span>and lots of ☕</span>
-          </div>
-          
-      <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 text-center md:text-left">
-        <span className="text-sm text-muted-foreground order-2 md:order-1">
-          Built with React + Tailwind CSS
-        </span>
-        <Button
-          onClick={scrollToTop}
-          variant="outline"
-          size="sm"
-          className="rounded-full p-2 hover:bg-primary/10 order-1 md:order-2"
+        {/* Back to top */}
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="p-2 text-[#a1a1aa] hover:text-white border border-[#27272a] hover:border-[#52525b] rounded transition-all duration-200"
+          aria-label="Back to top"
         >
           <ArrowUp className="h-4 w-4" />
-        </Button>
-      </div>
-        </motion.div>
-
+        </button>
       </div>
     </footer>
   );
 }
+
