@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const navItems = [
   { label: 'About', href: '#about' },
@@ -15,6 +16,9 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+  const [tapCount, setTapCount] = useState(0);
+  const [lastTap, setLastTap] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,6 +44,24 @@ export default function Navbar() {
     setIsMobileMenuOpen(false);
   };
 
+  const handleLogoClick = () => {
+    const now = Date.now();
+    // Reset if more than 500ms between taps
+    if (now - lastTap > 500) {
+      setTapCount(1);
+    } else {
+      const newCount = tapCount + 1;
+      setTapCount(newCount);
+      if (newCount >= 5) {
+        setTapCount(0);
+        navigate('/admin-login');
+        return; // Skip normal scroll behavior on successful trigger
+      }
+    }
+    setLastTap(now);
+    scrollToSection('#hero');
+  };
+
   return (
     <>
       <motion.nav
@@ -53,7 +75,7 @@ export default function Navbar() {
         <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
           {/* Logo */}
           <button
-            onClick={() => scrollToSection('#hero')}
+            onClick={handleLogoClick}
             className="font-mono text-base font-bold text-white tracking-widest hover:text-[#a1a1aa] transition-colors"
           >
             SN<span className="text-[#a1a1aa]">.dev</span>
